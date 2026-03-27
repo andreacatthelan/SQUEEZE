@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Squeeze — Premium Powder Drinks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0d0014;
+      --bg2:       #130020;
+      --bg3:       #1a002e;
+      --purple:    #7c3aed;
+      --purple-lt: #a855f7;
+      --lilac:     #d8b4fe;
+      --lilac-dim: rgba(216,180,254,0.55);
+      --border:    rgba(168,85,247,0.22);
+      --border-md: rgba(168,85,247,0.45);
+      --text:      #f0e8ff;
+      --text-muted:#a080c0;
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── BACKGROUND GLOW ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 10%, rgba(124,58,237,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 80% 80%, rgba(168,85,247,0.12) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 48px;
+      background: rgba(13,0,20,0.75);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 24px;
+      color: var(--lilac);
+      letter-spacing: -0.5px;
+      text-decoration: none;
+    }
+    .logo span { color: var(--purple-lt); }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 14px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--lilac); }
+
+    .nav-actions { display: flex; gap: 12px; align-items: center; }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-muted);
+      border: 0.5px solid var(--border-md);
+      border-radius: 20px;
+      padding: 8px 18px;
+      font-size: 13px;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-ghost:hover { color: var(--lilac); border-color: var(--lilac); }
+
+    .btn-cart {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--purple);
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      padding: 9px 20px;
+      font-size: 13px;
+      font-weight: 500;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-cart:hover { background: var(--purple-lt); transform: translateY(-1px); }
+
+    .cart-dot {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px; height: 18px;
+      background: var(--lilac);
+      color: var(--bg);
+      border-radius: 50%;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 40px;
+      align-items: center;
+      padding: 80px 48px 60px;
+      min-height: calc(100vh - 73px);
+    }
+
+    .hero-text { max-width: 540px; }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--purple-lt);
+      margin-bottom: 20px;
+    }
+    .eyebrow::before {
+      content: '';
+      width: 24px; height: 1px;
+      background: var(--purple-lt);
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(48px, 6vw, 76px);
+      font-weight: 800;
+      line-height: 1.0;
+      margin-bottom: 24px;
+      background: linear-gradient(140deg, #f0e8ff 0%, #c084fc 50%, #7c3aed 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.75;
+      margin-bottom: 36px;
+      max-width: 400px;
+    }
+
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #7c3aed, #a855f7);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-lg);
+      padding: 14px 32px;
+      font-size: 15px;
+      font-weight: 500;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-2px); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--lilac);
+      border: 1px solid var(--border-md);
+      border-radius: var(--radius-lg);
+      padding: 14px 28px;
+      font-size: 15px;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .btn-secondary:hover { background: rgba(168,85,247,0.1); border-color: var(--purple-lt); }
+
+    .hero-stats {
+      display: flex;
+      gap: 32px;
+      margin-top: 48px;
+      padding-top: 32px;
+      border-top: 0.5px solid var(--border);
+    }
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--lilac);
+    }
+    .stat-label { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+    /* ── HERO VISUAL ── */
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 480px;
+    }
+
+    .glow-orb {
+      position: absolute;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(124,58,237,0.25) 0%, transparent 70%);
+      animation: pulse 4s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.7; }
+      50%       { transform: scale(1.08); opacity: 1; }
+    }
+
+    .flavor-cards-stack {
+      position: relative;
+      z-index: 2;
+      width: 280px;
+    }
+
+    .flavor-card {
+      background: rgba(255,255,255,0.04);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      backdrop-filter: blur(12px);
+      margin-bottom: 12px;
+      transition: border-color 0.2s, transform 0.2s;
+      animation: slideIn 0.6s ease both;
+    }
+    .flavor-card:hover { border-color: var(--border-md); transform: translateX(4px); }
+    .flavor-card:nth-child(1) { animation-delay: 0.1s; }
+    .flavor-card:nth-child(2) { animation-delay: 0.25s; }
+    .flavor-card:nth-child(3) { animation-delay: 0.4s; }
+    .flavor-card:nth-child(4) { animation-delay: 0.55s; }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(24px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    .flavor-emoji { font-size: 28px; flex-shrink: 0; }
+
+    .flavor-info { flex: 1; }
+    .flavor-name { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: var(--text); }
+    .flavor-desc { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+    .flavor-tag {
+      font-size: 10px;
+      padding: 3px 9px;
+      border-radius: 8px;
+      font-weight: 500;
+    }
+    .tag-hot  { background: rgba(220,38,127,0.2); color: #f472b6; border: 0.5px solid rgba(244,114,182,0.3); }
+    .tag-new  { background: rgba(124,58,237,0.25); color: #c4b5fd; border: 0.5px solid rgba(196,181,253,0.3); }
+    .tag-sale { background: rgba(234,179,8,0.2);  color: #fde047; border: 0.5px solid rgba(253,224,71,0.3); }
+    .tag-fav  { background: rgba(16,185,129,0.2); color: #6ee7b7; border: 0.5px solid rgba(110,231,183,0.3); }
+
+    /* ── PRODUCTS SECTION ── */
+    .products-section {
+      position: relative;
+      z-index: 1;
+      padding: 0 48px 80px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 32px;
+    }
+
+    .section-eyebrow {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--purple-lt);
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .view-all {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-decoration: none;
+      border-bottom: 0.5px solid var(--border-md);
+      padding-bottom: 2px;
+      transition: color 0.2s;
+    }
+    .view-all:hover { color: var(--lilac); }
+
+    .filter-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      background: transparent;
+      border: 0.5px solid var(--border);
+      color: var(--text-muted);
+      border-radius: 20px;
+      padding: 7px 18px;
+      font-size: 13px;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .pill:hover { border-color: var(--purple-lt); color: var(--lilac); }
+    .pill.active {
+      background: rgba(124,58,237,0.25);
+      border-color: var(--purple-lt);
+      color: var(--lilac);
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .product-card {
+      background: rgba(255,255,255,0.03);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 28px 24px 24px;
+      position: relative;
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.2s, background 0.2s;
+    }
+    .product-card:hover {
+      border-color: var(--border-md);
+      background: rgba(124,58,237,0.07);
+      transform: translateY(-3px);
+    }
+
+    .product-badge {
+      position: absolute;
+      top: 16px; right: 16px;
+      font-size: 10px;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 8px;
+    }
+
+    .product-icon { font-size: 38px; margin-bottom: 16px; display: block; }
+
+    .product-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .product-flavor {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+
+    .product-footer { display: flex; justify-content: space-between; align-items: center; }
+
+    .product-price {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--purple-lt);
+    }
+
+    .btn-add {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: rgba(124,58,237,0.3);
+      border: 0.5px solid var(--border-md);
+      color: var(--lilac);
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-add:hover { background: var(--purple); transform: scale(1.1); }
+
+    /* ── BANNER STRIP ── */
+    .banner {
+      position: relative;
+      z-index: 1;
+      margin: 0 48px 80px;
+      background: linear-gradient(135deg, rgba(124,58,237,0.3), rgba(168,85,247,0.15));
+      border: 0.5px solid var(--border-md);
+      border-radius: var(--radius-lg);
+      padding: 40px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      overflow: hidden;
+    }
+    .banner::before {
+      content: '';
+      position: absolute;
+      right: -60px; top: -60px;
+      width: 240px; height: 240px;
+      border-radius: 50%;
+      background: rgba(124,58,237,0.15);
+    }
+
+    .banner-text h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .banner-text p {
+      font-size: 14px;
+      color: var(--text-muted);
+      max-width: 380px;
+      line-height: 1.6;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 0.5px solid var(--border);
+      padding: 32px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--lilac);
+    }
+
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+    .footer-links a:hover { color: var(--lilac); }
+
+    .footer-copy { font-size: 12px; color: var(--text-muted); }
+
+    /* ── ANIMATIONS ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.7s ease forwards;
+    }
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.25s; }
+    .delay-3 { animation-delay: 0.4s; }
+    .delay-4 { animation-delay: 0.55s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 48px 24px 40px; min-height: auto; }
+      .hero-visual { height: 300px; }
+      .products-section { padding: 0 24px 60px; }
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+      .banner { margin: 0 24px 60px; flex-direction: column; }
+      footer { padding: 24px; flex-direction: column; gap: 16px; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+    @media (max-width: 560px) {
+      .products-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <a href="#" class="logo">Squeeze<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#">Shop</a></li>
+      <li><a href="#">Flavors</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">FAQ</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-ghost">Sign in</button>
+      <button class="btn-cart">
+        Cart <span class="cart-dot" id="cart-count">0</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-text">
+      <div class="eyebrow fade-up">Premium powder drinks</div>
+      <h1 class="fade-up delay-1">Flavour in<br>every drop.</h1>
+      <p class="hero-sub fade-up delay-2">
+        Instant juice powders crafted with real fruit extracts.
+        Zero artificial colours, no preservatives.
+        Just mix, shake &amp; enjoy.
+      </p>
+      <div class="hero-actions fade-up delay-3">
+        <button class="btn-primary" onclick="scrollToProducts()">Shop now</button>
+        <button class="btn-secondary">Our story</button>
+      </div>
+      <div class="hero-stats fade-up delay-4">
+        <div>
+          <div class="stat-num">12+</div>
+          <div class="stat-label">Flavours</div>
+        </div>
+        <div>
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Natural extracts</div>
+        </div>
+        <div>
+          <div class="stat-num">4.9★</div>
+          <div class="stat-label">Customer rating</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="glow-orb"></div>
+      <div class="flavor-cards-stack">
+        <div class="flavor-card">
+          <span class="flavor-emoji">🍒</span>
+          <div class="flavor-info">
+            <div class="flavor-name">Wild Cherry</div>
+            <div class="flavor-desc">Tangy · Refreshing · Bold</div>
+          </div>
+          <span class="flavor-tag tag-hot">Bestseller</span>
+        </div>
+        <div class="flavor-card">
+          <span class="flavor-emoji">🫐</span>
+          <div class="flavor-info">
+            <div class="flavor-name">Blueberry Blast</div>
+            <div class="flavor-desc">Sweet · Deep · Fruity</div>
+          </div>
+          <span class="flavor-tag tag-new">New</span>
+        </div>
+        <div class="flavor-card">
+          <span class="flavor-emoji">🍇</span>
+          <div class="flavor-info">
+            <div class="flavor-name">Grape Rush</div>
+            <div class="flavor-desc">Rich · Smooth · Classic</div>
+          </div>
+          <span class="flavor-tag tag-fav">Fan fav</span>
+        </div>
+        <div class="flavor-card">
+          <span class="flavor-emoji">🍋</span>
+          <div class="flavor-info">
+            <div class="flavor-name">Lemon Zest</div>
+            <div class="flavor-desc">Sharp · Citrusy · Fresh</div>
+          </div>
+          <span class="flavor-tag tag-sale">−20%</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section class="products-section" id="products">
+    <div class="section-header">
+      <div>
+        <div class="section-eyebrow">Our collection</div>
+        <h2>Featured products</h2>
+      </div>
+      <a href="#" class="view-all">View all →</a>
+    </div>
+
+    <div class="filter-row">
+      <button class="pill active" onclick="filterPill(this)">All</button>
+      <button class="pill" onclick="filterPill(this)">Fruit</button>
+      <button class="pill" onclick="filterPill(this)">Tropical</button>
+      <button class="pill" onclick="filterPill(this)">Berry</button>
+      <button class="pill" onclick="filterPill(this)">Sugar-free</button>
+    </div>
+
+    <div class="products-grid">
+
+      <div class="product-card">
+        <span class="product-badge tag-hot">Bestseller</span>
+        <span class="product-icon">🍒</span>
+        <div class="product-name">Wild Cherry</div>
+        <div class="product-flavor">Cherry · Tangy · Refreshing</div>
+        <div class="product-footer">
+          <span class="product-price">€4.90</span>
+          <button class="btn-add" onclick="addToCart()">+</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <span class="product-badge tag-new">New</span>
+        <span class="product-icon">🫐</span>
+        <div class="product-name">Blueberry Blast</div>
+        <div class="product-flavor">Blueberry · Sweet · Bold</div>
+        <div class="product-footer">
+          <span class="product-price">€4.90</span>
+          <button class="btn-add" onclick="addToCart()">+</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <span class="product-badge tag-fav">Fan fav</span>
+        <span class="product-icon">🍇</span>
+        <div class="product-name">Grape Rush</div>
+        <div class="product-flavor">Grape · Deep · Fruity</div>
+        <div class="product-footer">
+          <span class="product-price">€4.90</span>
+          <button class="btn-add" onclick="addToCart()">+</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <span class="product-badge tag-sale">−20%</span>
+        <span class="product-icon">🍋</span>
+        <div class="product-name">Lemon Zest</div>
+        <div class="product-flavor">Lemon · Citrus · Sharp</div>
+        <div class="product-footer">
+          <span class="product-price">€3.90</span>
+          <button class="btn-add" onclick="addToCart()">+</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <span class="product-icon">🥭</span>
+        <div class="product-name">Mango Tropical</div>
+        <div class="product-flavor">Mango · Tropical · Smooth</div>
+        <div class="product-footer">
+          <span class="product-price">€4.90</span>
+          <button class="btn-add" onclick="addToCart()">+</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <span class="product-icon">🍓</span>
+        <div class="product-name">Strawberry Fields</div>
+        <div class="product-flavor">Strawberry · Sweet · Light</div>
+        <div class="product-footer">
+          <span class="product-price">€4.90</span>
+          <button class="btn-add" onclick="addToCart()">+</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- BANNER -->
+  <div class="banner">
+    <div class="banner-text">
+      <h3>Mix your perfect bundle 🎁</h3>
+      <p>Choose any 5 flavours and save 25%. Free shipping on orders over €30. Limited time offer — don't miss out.</p>
+    </div>
+    <button class="btn-primary" style="white-space: nowrap; flex-shrink: 0;">Build my bundle →</button>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Squeeze.</div>
+    <div class="footer-links">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Shipping</a>
+      <a href="#">Contact</a>
+      <a href="#">Instagram</a>
+    </div>
+    <div class="footer-copy">© 2025 Squeeze. All rights reserved.</div>
+  </footer>
+
+  <script>
+    let cartCount = 0;
+
+    function addToCart() {
+      cartCount++;
+      document.getElementById('cart-count').textContent = cartCount;
+      const btn = event.currentTarget;
+      btn.style.background = '#a855f7';
+      btn.textContent = '✓';
+      setTimeout(() => {
+        btn.style.background = '';
+        btn.textContent = '+';
+      }, 700);
+    }
+
+    function filterPill(el) {
+      document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    function scrollToProducts() {
+      document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+
+</body>
+</html>
